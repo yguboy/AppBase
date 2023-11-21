@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "463905066844",
+    "project_id": "appbase-xxxx",
+    "storage_bucket": "appbase-xxxx.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463905066844:android:f721871bb1c0e0ddee7b99",
+        "android_client_info": {
+          "package_name": "br.edu.up.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvnohdoy4SLWJgx0t2Pk22jbgjJcESPME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

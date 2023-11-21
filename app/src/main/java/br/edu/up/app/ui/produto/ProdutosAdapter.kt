@@ -39,15 +39,15 @@ class ProdutosAdapter(
         val itemProduto = produtos[position]
 
         //Carregamento local
-        //val idFoto = Fotos.get(itemProduto.foto)
-        //holder.imgFoto.setImageResource(idFoto)
+        val idFoto = Fotos.get(itemProduto.foto)
+        holder.imgFoto.setImageResource(idFoto)
 
         //Carregamento remoto
-        holder.imgFoto.load(R.drawable.semfoto)
-        Firebase.storage.getReference(itemProduto.foto)
-            .downloadUrl.addOnSuccessListener { imageUrl ->
-                holder.imgFoto.load(imageUrl)
-            }
+//        holder.imgFoto.load(R.drawable.semfoto)
+//        Firebase.storage.getReference(itemProduto.foto)
+//            .downloadUrl.addOnSuccessListener { imageUrl ->
+//                holder.imgFoto.load(imageUrl)
+//            }
 
         holder.txtNome.text = itemProduto.nome
         holder.txtPreco.text = itemProduto.preco.toString()

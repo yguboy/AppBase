@@ -30,7 +30,7 @@ class ProdutoRepositorySqlite
         CoroutineScope(Job()).launch {
 
             produtoDAO.excluirTodos()
-            delay(15000)
+            delay(1000)
             val produtos = produtos()
             for(p in produtos){
                 p.id = 0
