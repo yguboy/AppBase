@@ -12,37 +12,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ClienteViewModel
-@Inject constructor(private val repository: ClienteRepository) : ViewModel() {
+class ClienteViewModel @Inject constructor(private val repository: ClienteRepository) : ViewModel() {
 
-    var cliente: Cliente = Cliente()
-
-    private var _clientes = MutableStateFlow(listOf<Cliente>())
+    private var _clientes = MutableStateFlow<List<Cliente>>(emptyList())
     val clientes: Flow<List<Cliente>> = _clientes
 
-    init {
-        viewModelScope.launch {
-            repository.clientes.collect { clientes ->
-                _clientes.value = clientes
-            }
-        }
-    }
-
     fun novo() {
-        this.cliente = Cliente()
+        _clientes.value = _clientes.value + Cliente()
     }
 
-    fun salvar() = viewModelScope.launch {
+    fun salvar(cliente: Cliente) = viewModelScope.launch {
         repository.salvar(cliente)
     }
 
-    fun editar(itemCliente: Cliente) = viewModelScope.launch {
+    fun editar(cliente: Cliente) = viewModelScope.launch {
         repository.editar(cliente)
     }
 
-    fun excluir(itemCliente: Cliente) = viewModelScope.launch {
-        val clienteParaExcluir = cliente
-        novo()
-        repository.excluir(clienteParaExcluir)
+    fun excluir(cliente: Cliente) = viewModelScope.launch {
+        repository.excluir(cliente)
+        _clientes.value = _clientes.value - cliente
     }
 }

@@ -19,6 +19,8 @@ class ClienteFragment : Fragment() {
 
     private val viewModel: ClienteViewModel by activityViewModels()
 
+    private val adapter = ClientesAdapter(viewModel)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,26 +37,14 @@ class ClienteFragment : Fragment() {
     private fun setupViews() {
         binding.btnAddCliente.setOnClickListener {
             viewModel.novo()
-            findNavController().navigate(R.id.action_clienteFragment_to_clienteEditFragment)
         }
-
-        val adapter = ClienteAdapter(
-            onDeleteClickListener = { cliente ->
-                viewModel.excluir(cliente)
-            },
-            onItemClickListener = { cliente ->
-                val action =
-                    ClienteFragmentDirections.actionClienteFragmentToClienteEditFragment(cliente.id)
-                findNavController().navigate(action)
-            }
-        )
 
         binding.recyclerViewClientes.adapter = adapter
     }
 
     private fun observeViewModel() {
         viewModel.clientes.observe(viewLifecycleOwner) { clientes ->
-            (binding.recyclerViewClientes.adapter as? ClienteAdapter)?.submitList(clientes)
+            adapter.clientes = clientes
         }
     }
 
