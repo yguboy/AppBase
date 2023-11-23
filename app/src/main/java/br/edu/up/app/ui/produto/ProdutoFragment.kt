@@ -46,7 +46,6 @@ class ProdutoFragment : Fragment() {
             viewModel.salvar()
             findNavController().popBackStack()
         }
-
         return binding.root
     }
 }

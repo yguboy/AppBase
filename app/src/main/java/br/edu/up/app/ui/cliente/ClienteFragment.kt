@@ -33,37 +33,33 @@ class ClienteFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val adapter = ClienteAdapter { cliente ->
-            val action =
-                ClienteFragmentDirections.actionClienteFragmentToClienteEditFragment(cliente.id)
-            findNavController().navigate(action)
-            binding.btnAddCliente.setOnClickListener {
-                viewModel.novo()
-                findNavController().navigate(R.id.action_clienteFragment_to_clienteEditFragment)
-            }
+        binding.btnAddCliente.setOnClickListener {
+            viewModel.novo()
+            findNavController().navigate(R.id.action_clienteFragment_to_clienteEditFragment)
+        }
 
-            val adapter = ClienteAdapter { cliente ->
+        val adapter = ClienteAdapter(
+            onDeleteClickListener = { cliente ->
+                viewModel.excluir(cliente)
+            },
+            onItemClickListener = { cliente ->
                 val action =
                     ClienteFragmentDirections.actionClienteFragmentToClienteEditFragment(cliente.id)
                 findNavController().navigate(action)
             }
+        )
 
-            binding.recyclerViewClientes.adapter = adapter
+        binding.recyclerViewClientes.adapter = adapter
+    }
 
-            adapter.setOnDeleteClickListener { cliente ->
-                viewModel.excluir(cliente)
-            }
+    private fun observeViewModel() {
+        viewModel.clientes.observe(viewLifecycleOwner) { clientes ->
+            (binding.recyclerViewClientes.adapter as? ClienteAdapter)?.submitList(clientes)
         }
+    }
 
-        private fun observeViewModel() {
-            viewModel.clientes.observe(viewLifecycleOwner) { clientes ->
-                (binding.recyclerViewClientes.adapter as ClienteAdapter).submitList(clientes)
-            }
-        }
-
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
